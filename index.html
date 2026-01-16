@@ -1,15 +1,24 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
+    <!-- 將 viewport 放進 head 內是標準做法 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>哈哈 你被騙了</title>
     <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
         /* 讓影片在手機上也能自動調整大小 */
         .video-container {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 比例 */
             height: 0;
             overflow: hidden;
+            max-width: 800px; /* 限制寬度避免在電腦螢幕上太大 */
+            margin: 20px auto;
         }
         .video-container iframe {
             position: absolute;
@@ -23,7 +32,6 @@
 <body>
     <h1>哈哈 你被騙了</h1>
     <div class="video-container">
-        <!-- 這裡貼上你從 YouTube 複製的代碼 -->
         <iframe 
             width="560" 
             height="315" 
@@ -35,5 +43,6 @@
             allowfullscreen>
         </iframe>  
     </div>
+    <p>永遠不會放棄你，永遠不會讓你哭...</p>
 </body>
 </html>

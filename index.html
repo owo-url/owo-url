@@ -2,46 +2,36 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <!-- 將 viewport 放進 head 內是標準做法 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>哈哈 你被騙了</title>
+    
+    <!-- 1. 新的預覽資訊 (Open Graph Tags) -->
+    <!-- 請將 content 的內容替換成你想要的假資訊 -->
+    <meta property="og:title" content="VS2026隱藏用法">
+    <meta property="og:description" content="點擊查看未公開的開發者專屬工具">
+    <!-- 將此 URL 換成你想顯示的假圖片網址（建議尺寸 1200x630） -->
+    <meta property="og:image" content="https://raw.githubusercontent.com/owo-url/owo-url/refs/heads/main/VS.png">
+    <meta property="og:type" content="website">
+    
+    <title>VS2026隱藏用法</title>
+
     <style>
-        body {
-            font-family: sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-        }
-        /* 讓影片在手機上也能自動調整大小 */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 比例 */
-            height: 0;
-            overflow: hidden;
-            max-width: 800px; /* 限制寬度避免在電腦螢幕上太大 */
-            margin: 20px auto;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+        body { font-family: sans-serif; text-align: center; background-color: #f0f0f0; margin: 0; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 800px; margin: 20px auto; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
     </style>
 </head>
 <body>
     <h1>哈哈 你被騙了</h1>
     <div class="video-container">
-        <iframe 
-            width="560" 
-            height="315" 
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ?muted=1&autoplay=1&loop=1&playlist=dQw4w9WgXcQ" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            allowfullscreen>
-        </iframe>  
+        <!-- Rickroll 影片嵌入 -->
+        <iframe width="560" height="315"
+ 		src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1;controls=0&loop=1&playlist=dQw4w9WgXcQ" 
+		title="YouTube video player"
+ 		frameborder="0"
+ 		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+ 		referrerpolicy="strict-origin-when-cross-origin"
+ 		allowfullscreen>
+	</iframe>
     </div>
     <p>永遠不會放棄你，永遠不會讓你哭...</p>
 </body>

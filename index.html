@@ -4,129 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- 1. 社交平台預覽資訊 -->
-    <meta property="og:title" content="VS2026 Hidden but most useful: Developer-specific toolbox">
-    <meta property="og:description" content="Microsoft's unreleased hidden features in VS2026. Click to view the full demo.">
-    <meta property="og:image" content="https://raw.githubusercontent.com">
+    <!-- 預覽資訊 -->
+    <meta property="og:title" content="VS2026 Hide usage">
+    <meta property="og:description" content="Click to view unreleased developer tools.">
+    <meta property="og:image" content="https://github.com/owo-url/owo-url/blob/main/VS.png?raw=true">
     <meta property="og:type" content="website">
-
+    
     <title>VS2026 Hide usage</title>
 
     <style>
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            text-align: center; 
-            background-color: #1e1e1e; 
-            color: #ffffff;
-            margin: 0; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+        body { font-family: sans-serif; text-align: center; background-color: #1e1e1e; color: white; margin: 0; padding-top: 50px; }
+        
+        /* 影片外框 */
+        .video-container { 
+            position: relative; 
+            padding-bottom: 56.25%; 
+            height: 0; 
+            overflow: hidden; 
+            max-width: 800px; 
+            margin: 20px auto; 
+            background: #000; /* 讓背景全黑，防止封面閃現 */
         }
 
-        .video-wrapper {
-            position: relative;
-            max-width: 800px;
-            width: 90%;
-            margin: 0 auto;
-            background: #000; /* 預載入時顯示黑色 */
-            aspect-ratio: 16 / 9;
+        /* 你的原本 iframe 樣式 */
+        .video-container iframe { 
+            position: absolute; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            pointer-events: none; /* 禁止直接點擊 iframe */
         }
 
-        #player {
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* 防止點擊到 iframe 內部 */
-        }
-
-        /* 誘餌層 */
-        #click-overlay {
+        /* 關鍵：覆蓋在 iframe 上方的「假封面」 */
+        #fake-cover {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 100;
+            background: #000 url('https://github.com/owo-url/owo-url/blob/main/VS.png?raw=true') no-repeat center center;
+            background-size: cover; /* 使用你指定的 VS 圖片當作載入前的封面 */
+            z-index: 10;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.5); /* 遮住原本的封面圖 */
         }
 
-        #btn-play {
-            background: #0078d4;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 4px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        /* 播放按鈕 */
+        .play-button {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .play-button::after {
+            content: '';
+            border-style: solid;
+            border-width: 15px 0 15px 25px;
+            border-color: transparent transparent transparent #1e1e1e;
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
 
-    <h1 id="status-text">VS2026 preview</h1>
+    <h1>VS2026 Functional demonstration</h1>
 
-    <div class="video-wrapper">
-        <div id="click-overlay">
-            <button id="btn-play">Click to load video</button>
+    <div class="video-container">
+        <!-- 這是你的假封面，會擋住 YouTube 預設的 Rickroll 封面 -->
+        <div id="fake-cover">
+            <div class="play-button"></div>
         </div>
-        <!-- YouTube API 會把這個 div 替換成 iframe -->
-        <div id="player"></div>
+
+        <!-- 你的原本 iframe，加上了 &enablejsapi=1 以便控制聲音 -->
+        <iframe id="rick-video" width="560" height="315"
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=c9Qs0fPdWYcMx-RO&amp;controls=0" 
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
     </div>
 
-    <!-- 載入 YouTube API -->
-    <script src="https://www.youtube.com/embed/dQw4w9WgXcQ"></script>
-
     <script>
-        let player;
-
-        // 1. 當 API 下載完成後會自動執行此函式
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                videoId: 'dQw4w9WgXcQ', // Rickroll 影片 ID
-                playerVars: {
-                    'autoplay': 1,
-                    'mute': 1,         // 必須先靜音，否則會被瀏覽器阻擋
-                    'controls': 0,     // 隱藏控制項
-                    'loop': 1,
-                    'playlist': 'dQw4w9WgXcQ', // 循環播放需要
-                    'rel': 0,
-                    'modestbranding': 1
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // 影片準備好了，確保它是靜音播放狀態
-            event.target.mute();
-            event.target.playVideo();
-        }
-
-        // 2. 當點擊按鈕時觸發
-        document.getElementById('btn-play').addEventListener('click', function() {
-            if (player) {
-                // 解除靜音並調大音量
-                player.unMute();
-                player.setVolume(100);
-                player.playVideo();
-                
-                // 隱藏遮罩
-                document.getElementById('click-overlay').style.display = 'none';
-                document.getElementById('status-text').innerText = "哈哈！你被騙了！XD";
-                
-                // 嘗試全螢幕
-                const elem = document.documentElement;
-                if (elem.requestFullscreen) elem.requestFullscreen();
-            }
+        // 當使用者點擊「假封面」時執行
+        document.getElementById('fake-cover').addEventListener('click', function() {
+            const iframe = document.getElementById('rick-video');
+            
+            // 1. 透過 API 解除靜音並播放 (這是 2026 年唯一能觸發有聲播放的方式)
+            iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            
+            // 2. 隱藏假封面，露出下方的影片
+            this.style.display = 'none';
+            
+            // 3. 修改標題
+            document.querySelector('h1').innerText = "哈哈！你被騙了！";
         });
     </script>
-
 </body>
 </html>

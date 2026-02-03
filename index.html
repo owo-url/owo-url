@@ -3,126 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <meta property="og:title" content="Minecraft 1.30 隱藏更新流出：末地與深淵">
-    <meta property="og:description" content="點擊觀看官方未公開的開發者演示影片，搶先看全新維度與生物。">
+    <meta property="og:description" content="點擊觀看官方未公開的開發者演示影片。">
     <meta property="og:image" content="https://github.com/owo-url/owo-url/blob/main/minecraft.png?raw=true">
-    <meta property="og:type" content="website">
     
-    <title>Minecraft Secret Update - Early Access</title>
+    <title>Minecraft Secret Update</title>
 
     <style>
-        body { 
-            font-family: 'Segoe UI', 'MicroSoft JhengHei', sans-serif; 
-            text-align: center; 
-            background-color: #1a1a1a; 
-            color: #f0f0f0; 
-            margin: 0; 
-            padding: 50px 20px; 
-        }
-        
-        .description-box { 
-            max-width: 800px; 
-            margin: 0 auto; 
-            padding: 20px; 
-            background: #2d2d2d; 
-            border: 2px solid #3c8527; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        h1 { color: #52e132; text-shadow: 2px 2px #000; margin-bottom: 20px; }
+        body { font-family: sans-serif; text-align: center; background-color: #1a1a1a; color: #f0f0f0; margin: 0; padding-top: 50px; }
+        .description-box { max-width: 600px; margin: 0 auto; padding: 20px; background: #2d2d2d; border: 2px solid #3c8527; border-radius: 8px; }
+        h1 { color: #52e132; }
         
         .video-container { 
             position: relative; 
-            width: 100%;
-            max-width: 854px; 
-            aspect-ratio: 16 / 9;
-            margin: 30px auto; 
+            width: 90%; max-width: 700px; 
+            aspect-ratio: 16 / 9; 
+            margin: 20px auto; 
             background: #000;
-            border: 4px solid #555;
-            border-radius: 4px;
-            overflow: hidden;
         }
 
+        /* 影片預設靜音、隱藏，並在後台跑 */
         #rick-video { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover;
+            width: 100%; height: 100%; 
+            display: block;
+            visibility: hidden; /* 預載時先隱藏 */
         }
 
         #fake-cover {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #000 url('https://github.com/owo-url/owo-url/blob/main/minecraft.png?raw=true') no-repeat center center;
-            background-size: cover;
+            background: url('https://github.com/owo-url/owo-url/blob/main/minecraft.png?raw=true') center/cover;
             z-index: 10;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
 
         .play-button {
-            width: 80px;
-            height: 80px;
-            background: rgba(60, 133, 39, 0.95);
-            border: 4px solid white;
+            width: 70px; height: 70px;
+            background: rgba(60, 133, 39, 0.9);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
+            border: 3px solid white;
         }
-        #fake-cover:hover .play-button { transform: scale(1.1); background: #52e132; }
         .play-button::after {
-            content: '';
-            border-style: solid;
-            border-width: 15px 0 15px 25px;
+            content: ''; display: inline-block; margin: 20px 0 0 5px;
+            border-style: solid; border-width: 15px 0 15px 25px;
             border-color: transparent transparent transparent white;
-            margin-left: 8px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Minecraft: The Abyss Update (Early Access)</h1>
-    
+    <h1>Minecraft: The Abyss Update</h1>
     <div class="description-box">
-        <h3>探索前所未見的全新生態域</h3>
-        <p id="sub-text">
-            Mojang 官方團隊流出的最新內部測試片段。本次更新將包含全新的<strong>「深淵維度」</strong>。
-            請點擊下方播放器觀看實機演示。
-        </p>
+        <p>官方 1.30 版本開發者演示影片</p>
     </div>
 
     <div class="video-container">
-        <div id="fake-cover">
-            <div class="play-button"></div>
-        </div>
+        <div id="fake-cover"><div class="play-button"></div></div>
 
-        <video id="rick-video" preload="auto" loop playsinline>
-            <source src="https://shattereddisk.github.io/rickroll/rickroll.mp4" type="video/mp4">
-        </video>
+        <video id="rick-video" preload="auto" loop playsinline muted autoplay>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"> 
+            </video>
     </div>
 
     <script>
+        // 更換為極速 Rickroll 連結 (由 Discord CDN 或是高效能伺服器提供)
+        const rickUrl = "https://files.catbox.moe/p996f0.mp4"; 
+        document.querySelector('source').src = rickUrl;
+        document.getElementById('rick-video').load();
+
         const fakeCover = document.getElementById('fake-cover');
         const video = document.getElementById('rick-video');
-        const title = document.querySelector('h1');
-        const subText = document.getElementById('sub-text');
 
         fakeCover.addEventListener('click', function() {
-            this.style.display = 'none';
-            
-            // 點擊後解除靜音並播放
-            video.muted = false; 
+            // 點擊瞬間：顯示影片、解除靜音、從頭播放
+            video.style.visibility = 'visible';
+            video.muted = false;
+            video.currentTime = 0;
             video.play();
             
-            // 惡作劇文字
-            title.innerText = "你被 Rickroll 了！";
-            title.style.color = "#ff4444";
-            subText.innerHTML = "<strong>Never Gonna Give You Up!</strong><br>這就是點擊神祕連結的下場 XD";
+            this.style.display = 'none';
+            document.querySelector('h1').innerText = "Boom! 你被炸了！";
         });
     </script>
 </body>
